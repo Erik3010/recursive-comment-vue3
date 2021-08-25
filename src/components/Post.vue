@@ -7,8 +7,12 @@
       <p>{{ post.content }}</p>
     </div>
     <div class="post-comments">
-      <h4 class="post-comments-title">Comments</h4>
-      <Comment />
+      <h3 class="post-comments-title">Comments</h3>
+      <Comment
+        v-for="comment in post.comments_tree"
+        :key="comment.id"
+        :comment="comment"
+      />
     </div>
   </div>
 </template>
@@ -26,8 +30,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_variables.scss";
+
 .post-container {
-  border: 1px solid #c9c9c9;
+  border: 1px solid $grey;
   border-radius: 5px;
   padding: 1.25rem;
 
@@ -41,14 +47,21 @@ export default {
     margin-top: 0.35rem;
     p {
       font-size: 0.85rem;
-      color: #868686;
+      color: $greyText;
     }
   }
 
   .post-comments {
     margin-top: 2rem;
+    > * {
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid $grey;
+    }
     &-title {
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid $grey;
     }
   }
 }
