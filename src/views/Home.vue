@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Post :post="post" />
+    <Post :post="post" @refresh-page="fetchPost" />
   </div>
 </template>
 

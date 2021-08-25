@@ -12,12 +12,15 @@
         v-for="comment in post.comments_tree"
         :key="comment.id"
         :comment="comment"
+        @create-comment="createComment"
       />
     </div>
   </div>
 </template>
 
 <script>
+import http from "@/http";
+
 import Comment from "@/components/Comment";
 
 export default {
@@ -26,6 +29,17 @@ export default {
     Comment,
   },
   props: ["post"],
+  setup(props, { emit }) {
+    const createComment = async ({ id, reply }) => {
+      await http.post(`/post/${props.post.id}/comment`, {
+        comment: reply,
+        parent_id: id,
+      });
+      emit("refresh-page");
+    };
+
+    return { createComment };
+  },
 };
 </script>
 
