@@ -2,6 +2,7 @@
   <div class="post-container" v-if="post">
     <div class="post-title">
       <h3>{{ post.title }}</h3>
+      <span class="post-subtitle">{{ DateTimeFormat(post.created_at) }}</span>
     </div>
     <div class="post-content">
       <p>{{ post.content }}</p>
@@ -22,6 +23,7 @@
 import http from "@/http";
 
 import Comment from "@/components/Comment";
+import DateTimeFormat from "@/utils/dateTime";
 
 export default {
   name: "Post",
@@ -38,7 +40,7 @@ export default {
       emit("refresh-page");
     };
 
-    return { createComment };
+    return { createComment, DateTimeFormat };
   },
 };
 </script>
@@ -55,12 +57,16 @@ export default {
     h3 {
       font-size: 1.2rem;
     }
+    .post-subtitle {
+      color: #5f5e5e;
+      font-size: 0.8rem;
+    }
   }
 
   .post-content {
-    margin-top: 0.35rem;
+    margin-top: 1rem;
     p {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: $greyText;
     }
   }

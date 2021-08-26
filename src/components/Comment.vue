@@ -5,8 +5,7 @@
         <span v-if="comment.replies.length">
           {{ childIndicator }}
         </span>
-        {{ comment.user.name }} -
-        {{ comment.id }}
+        {{ comment.user.name }}
       </div>
       <div class="comment-timestamp">
         {{ DateTimeFormat(comment.created_at) }}
@@ -15,12 +14,7 @@
         {{ comment.comment }}
       </div>
       <div class="comment-reply">
-        <form
-          @submit.prevent="
-            newCommentHandler({ id: comment.id, reply });
-            reply = '';
-          "
-        >
+        <form @submit.prevent="createComment(comment.id)">
           <input type="text" v-model="reply" />
           <button>Reply</button>
         </form>
@@ -57,7 +51,7 @@ export default {
       type: Function,
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const { depth } = props;
 
     const showChildren = ref(false);
@@ -75,7 +69,11 @@ export default {
 
     const childIndicator = computed(() => (showChildren.value ? "▲" : "▼"));
 
-    const createComment = (id) => {};
+    const createComment = (id) => {
+      props.newCommentHandler({ id, reply: reply.value });
+      reply.value = "";
+      showChildren.value = true;
+    };
 
     return {
       indent,
