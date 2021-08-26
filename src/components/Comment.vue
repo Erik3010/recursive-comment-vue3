@@ -2,7 +2,11 @@
   <div class="comment-container" v-if="comment.replies">
     <div :style="indent" class="comment">
       <div class="comment-header" @click="toggleChildren">
-        {{ comment.user.name }}
+        <span v-if="comment.replies.length">
+          {{ childIndicator }}
+        </span>
+        {{ comment.user.name }} -
+        {{ comment.id }}
       </div>
       <div class="comment-timestamp">
         {{ DateTimeFormat(comment.created_at) }}
@@ -11,19 +15,24 @@
         {{ comment.comment }}
       </div>
       <div class="comment-reply">
-        <form @submit.prevent="createComment(comment.id)">
+        <form
+          @submit.prevent="
+            newCommentHandler({ id: comment.id, reply });
+            reply = '';
+          "
+        >
           <input type="text" v-model="reply" />
           <button>Reply</button>
         </form>
       </div>
     </div>
-    <template v-if="comment.replies">
+    <template v-if="comment.replies && showChildren">
       <Comment
         v-for="childComment in comment.replies"
         :key="childComment.id"
         :comment="childComment"
         :depth="depth + 1"
-        @create-comment="createComment(childComment.id)"
+        :new-comment-handler="newCommentHandler"
       />
     </template>
   </div>
@@ -44,6 +53,9 @@ export default {
       type: Number,
       default: 0,
     },
+    newCommentHandler: {
+      type: Function,
+    },
   },
   setup(props, { emit }) {
     const { depth } = props;
@@ -61,10 +73,9 @@ export default {
       showChildren.value = !showChildren.value;
     };
 
-    const createComment = (id) => {
-      emit("create-comment", { id, reply: reply.value });
-      reply.value = "";
-    };
+    const childIndicator = computed(() => (showChildren.value ? "▲" : "▼"));
+
+    const createComment = (id) => {};
 
     return {
       indent,
@@ -72,8 +83,9 @@ export default {
       showChildren,
       toggleChildren,
       DateTimeFormat,
-      createComment,
       reply,
+      childIndicator,
+      createComment,
     };
   },
 };
@@ -111,7 +123,7 @@ export default {
       outline: none;
       border-radius: 5px;
       background: rgb(248, 248, 248);
-      border: 1.5px solid $greyText;
+      border: 1.5px solid #bbbbbb;
       padding: 0.35rem 0.75rem;
       font-size: 14px;
       margin-right: 0.75rem;

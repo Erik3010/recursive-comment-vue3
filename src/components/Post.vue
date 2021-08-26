@@ -12,7 +12,7 @@
         v-for="comment in post.comments_tree"
         :key="comment.id"
         :comment="comment"
-        @create-comment="createComment"
+        :new-comment-handler="createComment"
       />
     </div>
   </div>
