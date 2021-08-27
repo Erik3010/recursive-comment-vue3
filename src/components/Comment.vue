@@ -1,5 +1,9 @@
 <template>
-  <div class="comment-container" v-if="comment.replies">
+  <div
+    :class="['comment-container', { 'comment-first-parent': !depth }]"
+    v-if="comment.replies"
+  >
+    <div class="comment-line" :style="lineWidth"></div>
     <div :style="indent" class="comment">
       <div class="comment-header" @click="toggleChildren">
         <span v-if="comment.replies.length">
@@ -16,12 +20,11 @@
       <div class="comment-reply">
         <button
           class="comment-reply-button"
-          v-if="!isReplyComment"
-          @click="isReplyComment = true"
+          @click="isReplyComment = !isReplyComment"
         >
           Reply Comment
         </button>
-        <form @submit.prevent="createComment(comment.id)" v-else>
+        <form @submit.prevent="createComment(comment.id)" v-if="isReplyComment">
           <input class="comment-reply-input" type="text" v-model="reply" />
           <button class="comment-reply-submit">Reply</button>
         </form>
@@ -71,6 +74,12 @@ export default {
       };
     });
 
+    const lineWidth = computed(() => {
+      return {
+        width: `${(depth + 1) * 23}px`,
+      };
+    });
+
     const toggleChildren = () => {
       showChildren.value = !showChildren.value;
     };
@@ -94,6 +103,7 @@ export default {
       childIndicator,
       createComment,
       isReplyComment,
+      lineWidth,
     };
   },
 };
@@ -103,8 +113,16 @@ export default {
 @import "@/styles/_variables.scss";
 
 .comment-container {
+  position: relative;
   .comment {
     margin-bottom: 0.25rem;
+    &-line {
+      position: absolute;
+      background: $grey;
+      height: 1px;
+      top: 10px;
+      left: -25px;
+    }
   }
   .comment-timestamp {
     font-size: 0.7rem;

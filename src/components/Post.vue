@@ -8,13 +8,16 @@
       <p>{{ post.content }}</p>
     </div>
     <div class="post-comments">
+      <div class="post-comments-line"></div>
       <h3 class="post-comments-title">Comments</h3>
-      <Comment
-        v-for="comment in post.comments_tree"
-        :key="comment.id"
-        :comment="comment"
-        :new-comment-handler="createComment"
-      />
+      <div class="post-comments-wrapper">
+        <Comment
+          v-for="comment in post.comments_tree"
+          :key="comment.id"
+          :comment="comment"
+          :new-comment-handler="createComment"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -72,11 +75,23 @@ export default {
   }
 
   .post-comments {
+    position: relative;
+    overflow: hidden;
     margin-top: 2rem;
-    > * {
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.5rem;
-      border-bottom: 1px solid $grey;
+    &-line {
+      position: absolute;
+      background: $grey;
+      width: 1px;
+      top: 57px;
+      bottom: 65px;
+    }
+    &-wrapper {
+      padding-left: 1.5rem;
+      > * {
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid $grey;
+      }
     }
     &-title {
       margin-bottom: 0.85rem;
