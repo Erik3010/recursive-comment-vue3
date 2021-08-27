@@ -67,7 +67,7 @@ export default {
     margin-top: 1rem;
     p {
       font-size: 0.9rem;
-      color: $greyText;
+      color: $darkGrey;
     }
   }
 

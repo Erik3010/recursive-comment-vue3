@@ -14,9 +14,16 @@
         {{ comment.comment }}
       </div>
       <div class="comment-reply">
-        <form @submit.prevent="createComment(comment.id)">
-          <input type="text" v-model="reply" />
-          <button>Reply</button>
+        <button
+          class="comment-reply-button"
+          v-if="!isReplyComment"
+          @click="isReplyComment = true"
+        >
+          Reply Comment
+        </button>
+        <form @submit.prevent="createComment(comment.id)" v-else>
+          <input class="comment-reply-input" type="text" v-model="reply" />
+          <button class="comment-reply-submit">Reply</button>
         </form>
       </div>
     </div>
@@ -55,6 +62,7 @@ export default {
     const { depth } = props;
 
     const showChildren = ref(false);
+    const isReplyComment = ref(false);
     const reply = ref("");
 
     const indent = computed(() => {
@@ -72,6 +80,7 @@ export default {
     const createComment = (id) => {
       props.newCommentHandler({ id, reply: reply.value });
       reply.value = "";
+      isReplyComment.value = false;
       showChildren.value = true;
     };
 
@@ -84,6 +93,7 @@ export default {
       reply,
       childIndicator,
       createComment,
+      isReplyComment,
     };
   },
 };
@@ -98,7 +108,7 @@ export default {
   }
   .comment-timestamp {
     font-size: 0.7rem;
-    color: #9d9d9d;
+    color: $lightGrey;
     margin-bottom: 0.1rem;
   }
   .comment-header {
@@ -107,7 +117,7 @@ export default {
     font-size: 0.9rem;
   }
   .comment-content {
-    color: $greyText;
+    color: $darkGrey;
     font-size: 0.85rem;
   }
   .comment-reply {
@@ -116,28 +126,48 @@ export default {
       width: 100%;
       margin: 0.35rem 0 1.25rem;
     }
-    input {
+    &-button {
+      font-size: 0.75rem;
+      background: none;
+      border: none;
+      border-radius: 5px;
+      color: $darkGrey;
+      cursor: pointer;
+      padding: 0.35rem 0.5rem;
+      line-height: 100%;
+      margin: 0.5rem 0;
+      border: 1px solid #cac9c9;
+      &:hover {
+        background: #e6e6e6;
+      }
+    }
+    &-input {
       width: 100%;
       outline: none;
       border-radius: 5px;
       background: rgb(248, 248, 248);
       border: 1.5px solid #bbbbbb;
       padding: 0.35rem 0.75rem;
-      font-size: 14px;
+      font-size: 0.875rem;
       margin-right: 0.75rem;
+      color: $dark;
       &:focus {
         border-color: $primary;
+        box-shadow: $primaryShadow;
       }
     }
-    button {
+    &-submit {
       cursor: pointer;
       padding: 0.35rem 1rem;
       background: $primary;
       border: 1px solid transparent;
-      color: white;
+      color: #fff;
       border-radius: 5px;
       &:hover {
         background: $hover;
+      }
+      &:focus {
+        box-shadow: $primaryShadow;
       }
     }
   }
