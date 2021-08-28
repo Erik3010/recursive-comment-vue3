@@ -6,8 +6,8 @@
       Seems you have redirected to the wrong page. Use the button below to go
       back to the home page 😟
     </p>
-    <router-link to="/" #="{ href, navigate, }">
-      <button :href="href" @click="navigate" class="btn-primary">
+    <router-link to="/" #="{ navigate }">
+      <button @click="navigate" class="btn-primary">
         Back to Home
       </button>
     </router-link>
@@ -41,6 +41,9 @@
     margin: 0 auto 2rem;
     width: 50%;
     text-align: center;
+    @media screen and (max-width: 512px) {
+      width: 80%;
+    }
   }
 }
 </style>

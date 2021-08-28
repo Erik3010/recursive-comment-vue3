@@ -2,26 +2,66 @@
   <header class="app-header">
     <div class="container">
       <div class="app-header-title">
-        <h2>OpenForum</h2>
+        <router-link to="/">
+          <h2>OpenForum</h2>
+        </router-link>
       </div>
-      <ul class="app-header-menu-list">
-        <li>
-          <router-link to="/">All Posts</router-link>
-        </li>
-        <li>
-          <router-link to="/setting">Setting</router-link>
-        </li>
-        <li>
-          <router-link to="/login">Login</router-link>
-        </li>
-      </ul>
+      <transition name="menu-animation">
+        <ul
+          v-if="isDesktopScreen || isMobileNavOpen"
+          :class="['app-header-menu-list', { 'is-mobile': isMobileNavOpen }]"
+        >
+          <li v-for="menu in menuList" :key="menu.link">
+            <router-link :to="menu.link">{{ menu.label }}</router-link>
+          </li>
+        </ul>
+      </transition>
+      <HamburgerButton @click="isMobileNavOpen = true" />
     </div>
   </header>
 </template>
 
 <script>
+import { ref, reactive, computed, watch } from "vue";
+
+import HamburgerButton from "@/components/HamburgerButton";
+
+import { onBeforeRouteUpdate } from "vue-router";
+
+import useScreenWidth from "@/composable/useScreenWidth";
+
 export default {
   name: "Header",
+  components: {
+    HamburgerButton,
+  },
+  setup() {
+    const { screenWidth } = useScreenWidth();
+
+    const isMobileNavOpen = ref(false);
+    const menuList = reactive([
+      {
+        label: "All Posts",
+        link: "/",
+      },
+      {
+        label: "Setting",
+        link: "/setting",
+      },
+      {
+        label: "Login",
+        link: "/login",
+      },
+    ]);
+
+    const isDesktopScreen = computed(() => screenWidth.value > 432);
+
+    onBeforeRouteUpdate(() => {
+      if (isMobileNavOpen.value) isMobileNavOpen.value = false;
+    });
+
+    return { isMobileNavOpen, menuList, isDesktopScreen };
+  },
 };
 </script>
 
@@ -43,7 +83,13 @@ export default {
     align-items: center;
   }
   &-title {
-    color: $primary;
+    a {
+      color: $primary;
+    }
+    @media screen and (max-width: 432px) {
+      width: 100%;
+      text-align: center;
+    }
   }
   &-menu-list {
     display: flex;
@@ -60,6 +106,34 @@ export default {
         color: $primary;
       }
     }
+    &.is-mobile {
+      display: flex;
+      position: fixed;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      inset: 0;
+      background: #fff;
+      z-index: 999;
+      > * {
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+      > * + * {
+        margin: 2rem 0 0;
+      }
+    }
+  }
+}
+.menu-animation {
+  &-enter-active,
+  &-leave-active {
+    transition: 0.3s ease;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
   }
 }
 </style>

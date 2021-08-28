@@ -42,12 +42,16 @@ export default {
   .post-title {
     h3 {
       a {
+        transition: all 0.25s;
         &:hover {
-          text-decoration: underline;
+          color: $primary;
         }
       }
       font-size: 1.2rem;
       line-height: 1.45;
+      @media screen and (max-width: 432px) {
+        font-size: 1rem;
+      }
     }
     .post-subtitle {
       color: $subtitle;
