@@ -23,10 +23,9 @@
 </template>
 
 <script>
-import http from "@/http";
-
 import Comment from "@/components/Comment";
 import DateTimeFormat from "@/utils/dateTime";
+import CommentService from "@/services/CommentService";
 
 export default {
   name: "Post",
@@ -36,7 +35,7 @@ export default {
   props: ["post"],
   setup(props, { emit }) {
     const createComment = async ({ id, reply }) => {
-      await http.post(`/post/${props.post.id}/comment`, {
+      await CommentService.create(props.post.id, {
         comment: reply,
         parent_id: id,
       });

@@ -6,8 +6,7 @@
 
 <script>
 import Post from "@/components/Post";
-
-import http from "@/http";
+import PostService from "@/services/PostService";
 
 import { ref, onMounted } from "vue";
 
@@ -20,7 +19,7 @@ export default {
     const post = ref(null);
 
     const fetchPost = async () => {
-      const result = await http.get("post/13");
+      const result = await PostService.get("13");
 
       post.value = result.data;
 
