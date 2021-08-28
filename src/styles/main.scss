@@ -1,42 +1,42 @@
 @import "variables";
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    line-height: 1.5;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	line-height: 1.5;
+	outline: none;
 
-    .container {
-        width: 800px;
-        margin: 3rem auto;
-        @media screen and (max-width: 800px) {
-            width: 100%;
-            padding: 0 2rem;
-        }
-    }
+	.container {
+		width: 800px;
+		margin: 3rem auto;
+		@media screen and (max-width: 800px) {
+			width: 100%;
+			padding: 0 2rem;
+		}
+	}
 }
 
 a {
-    text-decoration: none;
-    color: $dark;
-    outline: none;
+	text-decoration: none;
+	color: $dark;
 }
 
 ul {
-    list-style: none;
+	list-style: none;
 }
 
 .btn-primary {
-    cursor: pointer;
-    padding: 0.35rem 1rem;
-    background: $primary;
-    border: 1px solid transparent;
-    color: #fff;
-    border-radius: 5px;
-    &:hover {
-        background: $hover;
-    }
-    &:focus {
-        box-shadow: $primaryShadow;
-    }
+	cursor: pointer;
+	padding: 0.35rem 1rem;
+	background: $primary;
+	border: 1px solid transparent;
+	color: #fff;
+	border-radius: 5px;
+	&:hover {
+		background: $hover;
+	}
+	&:focus {
+		box-shadow: $primaryShadow;
+	}
 }

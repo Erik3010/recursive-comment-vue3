@@ -175,7 +175,6 @@ export default {
     }
     &-input {
       width: 100%;
-      outline: none;
       border-radius: 5px;
       background: rgb(248, 248, 248);
       border: 1.5px solid #bbbbbb;

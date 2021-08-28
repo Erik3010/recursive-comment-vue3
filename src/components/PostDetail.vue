@@ -54,6 +54,7 @@ export default {
   border: 1px solid $grey;
   border-radius: 5px;
   padding: 1.25rem;
+  box-shadow: $shadow;
   .post-title {
     h3 {
       font-size: 1.2rem;

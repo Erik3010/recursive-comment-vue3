@@ -34,6 +34,7 @@ export default {
   border-radius: 5px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
+  box-shadow: $shadow;
   &:hover {
     border-color: $primary;
     box-shadow: $primaryShadow;

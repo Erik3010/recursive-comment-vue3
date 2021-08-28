@@ -4,7 +4,7 @@
     <p class="not-found-subtitle">Page not found</p>
     <p class="not-found-content">
       Seems you have redirected to the wrong page. Use the button below to go
-      back to the home page
+      back to the home page 😟
     </p>
     <router-link to="/" #="{ href, navigate, }">
       <button :href="href" @click="navigate" class="btn-primary">
