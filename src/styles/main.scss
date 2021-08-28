@@ -25,3 +25,18 @@ a {
 ul {
     list-style: none;
 }
+
+.btn-primary {
+    cursor: pointer;
+    padding: 0.35rem 1rem;
+    background: $primary;
+    border: 1px solid transparent;
+    color: #fff;
+    border-radius: 5px;
+    &:hover {
+        background: $hover;
+    }
+    &:focus {
+        box-shadow: $primaryShadow;
+    }
+}

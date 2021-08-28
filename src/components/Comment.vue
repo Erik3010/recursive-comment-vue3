@@ -28,7 +28,7 @@
             v-model="reply"
             ref="replyInput"
           />
-          <button class="comment-reply-submit">Reply</button>
+          <button class="btn-primary">Reply</button>
         </form>
       </div>
     </div>
@@ -185,20 +185,6 @@ export default {
       color: $dark;
       &:focus {
         border-color: $primary;
-        box-shadow: $primaryShadow;
-      }
-    }
-    &-submit {
-      cursor: pointer;
-      padding: 0.35rem 1rem;
-      background: $primary;
-      border: 1px solid transparent;
-      color: #fff;
-      border-radius: 5px;
-      &:hover {
-        background: $hover;
-      }
-      &:focus {
         box-shadow: $primaryShadow;
       }
     }
