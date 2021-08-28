@@ -18,14 +18,16 @@
         {{ comment.comment }}
       </div>
       <div class="comment-reply">
-        <button
-          class="comment-reply-button"
-          @click="isReplyComment = !isReplyComment"
-        >
+        <button class="comment-reply-button" @click="toggleCommentReply">
           Reply Comment
         </button>
         <form @submit.prevent="createComment(comment.id)" v-if="isReplyComment">
-          <input class="comment-reply-input" type="text" v-model="reply" />
+          <input
+            class="comment-reply-input"
+            type="text"
+            v-model="reply"
+            ref="replyInput"
+          />
           <button class="comment-reply-submit">Reply</button>
         </form>
       </div>
@@ -43,7 +45,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import DateTimeFormat from "@/utils/dateTime";
 
 export default {
@@ -67,6 +69,8 @@ export default {
     const showChildren = ref(false);
     const isReplyComment = ref(false);
     const reply = ref("");
+
+    const replyInput = ref(null);
 
     const indent = computed(() => {
       return {
@@ -93,6 +97,14 @@ export default {
       showChildren.value = true;
     };
 
+    const toggleCommentReply = async () => {
+      isReplyComment.value = !isReplyComment.value;
+      if (isReplyComment.value) {
+        await nextTick();
+        replyInput.value.focus();
+      }
+    };
+
     return {
       indent,
       depth,
@@ -104,6 +116,8 @@ export default {
       createComment,
       isReplyComment,
       lineWidth,
+      replyInput,
+      toggleCommentReply,
     };
   },
 };

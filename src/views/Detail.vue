@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <PostDetail :post="post" @refresh-page="fetchPost" v-if="post" />
-  </div>
+  <PostDetail :post="post" @refresh-page="fetchPost" v-if="post" />
 </template>
 
 <script>
@@ -35,5 +33,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss"></style>

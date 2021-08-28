@@ -41,8 +41,6 @@ export default {
   .post-title {
     h3 {
       a {
-        color: $dark;
-        text-decoration: none;
         &:hover {
           text-decoration: underline;
         }
