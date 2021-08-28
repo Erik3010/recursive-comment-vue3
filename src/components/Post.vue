@@ -83,7 +83,7 @@ export default {
       background: $grey;
       width: 1px;
       top: 57px;
-      bottom: 65px;
+      bottom: 111px;
     }
     &-wrapper {
       padding-left: 1.5rem;

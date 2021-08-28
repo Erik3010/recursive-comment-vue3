@@ -1,5 +1,5 @@
 export default function(date) {
-  return new Intl.DateTimeFormat("id", {
+  return new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "long",
     day: "numeric",
