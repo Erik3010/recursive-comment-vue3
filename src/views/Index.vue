@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Post :post="post" @refresh-page="fetchPost" />
+    <Post v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
@@ -11,26 +11,24 @@ import PostService from "@/services/PostService";
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "Home",
+  name: "Index",
   components: {
     Post,
   },
   setup() {
-    const post = ref(null);
+    const posts = ref([]);
 
-    const fetchPost = async () => {
-      const result = await PostService.get("13");
+    const fetchPosts = async () => {
+      const result = await PostService.getAll();
 
-      post.value = result.data;
-
-      console.log(result.data);
+      posts.value = result.data;
     };
 
     onMounted(() => {
-      fetchPost();
+      fetchPosts();
     });
 
-    return { fetchPost, post };
+    return { fetchPosts, posts };
   },
 };
 </script>

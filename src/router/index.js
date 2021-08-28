@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+
+import Index from "@/views/Index.vue";
+import Detail from "@/views/Detail.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "index",
+    component: Index,
+  },
+  {
+    path: "/post/:id",
+    name: "post-detail",
+    component: Detail,
   },
 ];
 
